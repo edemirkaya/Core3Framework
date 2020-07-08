@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Core3_Framework.Business.Services
 {
@@ -19,7 +20,6 @@ namespace Core3_Framework.Business.Services
         {
 
         }
-
         public ServiceResult<List<Categories>> GetAllCategory()
         {
             int hata = 0;
@@ -38,7 +38,7 @@ namespace Core3_Framework.Business.Services
             }
 
             sonucTipi = EnumServiceResultType.Success;
-            return new ServiceResult<List<Categories>> { Message = hataMesaji, ServiceResultType = sonucTipi, Result = category };
+            return new ServiceResult<List<Categories>>  { Message = hataMesaji, ServiceResultType = sonucTipi, Result = category };
         }
 
         public ServiceResult<Categories> GetCategory(int categoryId)

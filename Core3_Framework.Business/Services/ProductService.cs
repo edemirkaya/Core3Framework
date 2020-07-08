@@ -12,7 +12,7 @@ using System.Text;
 
 namespace Core3_Framework.Business.Services
 {
-    public class ProductService : ServiceBase, IProductService
+    public class ProductService : ServiceBase
     {
         public ProductService(AppDb _dbContext, ILogHelper _iLogHelper)
                : base(_dbContext)

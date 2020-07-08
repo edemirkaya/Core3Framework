@@ -1,4 +1,5 @@
 ﻿using System;
+using App.WebAPI.Models;
 using CommonCore.Interfaces;
 using Core3_Framework.Contracts.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -10,8 +11,10 @@ namespace App.WebAPI.Controllers
     {
         private readonly DbContext dbContext;
         public readonly ILogHelper Ilog;
+
         public BaseController()
         {
+
         }
 
         public BaseController(DbContext _dbContext, ICacheItemService _cacheItemService)

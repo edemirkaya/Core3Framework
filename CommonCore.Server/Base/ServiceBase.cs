@@ -1,8 +1,8 @@
 ﻿namespace CommonCore.Server.Base
 {
-    public class CsbServiceBase
+    public class ServiceBase
     {
-        public CsbServiceBase()
+        public ServiceBase()
         {
         }
     }

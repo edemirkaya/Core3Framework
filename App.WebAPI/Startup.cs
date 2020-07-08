@@ -25,6 +25,9 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Newtonsoft.Json.Serialization;
 using Newtonsoft.Json;
+using Microsoft.IdentityModel.Tokens;
+using App.WebAPI.Models;
+using Refit;
 
 namespace App.WebAPI
 {
@@ -51,7 +54,7 @@ namespace App.WebAPI
             {
                 try
                 {
-                    ctx.UseNpgsql(Configuration.GetConnectionString("IRes"));
+                    ctx.UseNpgsql(Configuration.GetConnectionString("ConStr"));
                     //ctx.UseNpgsql(Configuration.GetConnectionString("IRes"), b => b.MigrationsAssembly("App.WebAPI"));
                 }
                 catch (Exception)
@@ -78,6 +81,7 @@ namespace App.WebAPI
             services.AddSingleton<IJwtTokenValidationSettings, JwtTokenValidationSettingsFactory>();
 
             // Create TokenValidation factory with DI priciple
+            //TODO HATA VEREBILIR
             var tokenValidationSettings = services.BuildServiceProvider().GetService<IJwtTokenValidationSettings>();
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -86,6 +90,15 @@ namespace App.WebAPI
                     options.TokenValidationParameters = tokenValidationSettings.CreateTokenValidationParameters();
                     options.SaveToken = true;
                 });
+
+            //services.AddOptions<JwtBearerOptions>(JwtBearerDefaults.AuthenticationScheme)
+            //    .Configure<IJwtTokenValidationSettings>((opts, jwtAuthManager) => {
+            //    opts.TokenValidationParameters = new TokenValidationParameters
+            //    {
+            //        AudienceValidator = jwtAuthManager.AudienceValidator,
+            //        // More code here...
+            //    };
+            //});
 
             // Secure all controllers by default
             var authorizePolicy = new AuthorizationPolicyBuilder()
@@ -115,8 +128,7 @@ namespace App.WebAPI
 
             services.AddSingleton<ILogHelper, LoggerSource>();
             // Add Mvc with options
-            services
-                    .AddMvc(config =>
+            services.AddMvc(config =>
                     {
                         config.Filters.Add(new AuthorizeFilter(authorizePolicy));
                         config.EnableEndpointRouting = false;
@@ -134,6 +146,9 @@ namespace App.WebAPI
             services.AddControllersWithViews()
                 .AddNewtonsoftJson();
             services.AddRazorPages();
+            services.AddRefitClient<ICategoryService>()
+                    .ConfigureHttpClient(c => c.BaseAddress = new Uri(Configuration.GetSection("APIs:CategoryApi:Url").Value));
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

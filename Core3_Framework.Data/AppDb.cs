@@ -57,7 +57,7 @@ namespace Core3_Framework.Data
                    .SetBasePath(Directory.GetCurrentDirectory())
                    .AddJsonFile("appsettings.json").Build();
             var builder = new DbContextOptionsBuilder<AppDb>();
-            var connectionString = configuration.GetConnectionString("IRes");
+            var connectionString = configuration.GetConnectionString("ConStr");
             optionsBuilder.UseNpgsql(connectionString);
         }
 
@@ -167,7 +167,7 @@ namespace Core3_Framework.Data
                     .SetBasePath(Directory.GetCurrentDirectory())
                     .AddJsonFile("appsettings.json").Build();
                 var builder = new DbContextOptionsBuilder<AppDb>();
-                var connectionString = configuration.GetConnectionString("IRes");
+                var connectionString = configuration.GetConnectionString("ConStr");
                 builder.UseNpgsql(connectionString);
                 return new AppDb(builder.Options);
             }
