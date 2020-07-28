@@ -20,7 +20,7 @@ namespace Core3_Framework.Business.Services
         {
 
         }
-        public ServiceResult<List<Categories>> GetAllCategory()
+        public async Task<ServiceResult<List<Categories>>> GetAllCategory()
         {
             int hata = 0;
             string hataMesaji = string.Empty;
@@ -38,10 +38,10 @@ namespace Core3_Framework.Business.Services
             }
 
             sonucTipi = EnumServiceResultType.Success;
-            return new ServiceResult<List<Categories>>  { Message = hataMesaji, ServiceResultType = sonucTipi, Result = category };
+            return new ServiceResult<List<Categories>> { Message = hataMesaji, ServiceResultType = sonucTipi, Result = category };
         }
 
-        public ServiceResult<Categories> GetCategory(int categoryId)
+        public async Task<ServiceResult<Categories>> GetCategory(int categoryId)
         {
             int hata = 0;
             string hataMesaji = string.Empty;

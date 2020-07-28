@@ -29,7 +29,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "App.WebAPI", "App.WebAPI\Ap
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core3_Framework.Data", "Core3_Framework.Data\Core3_Framework.Data.csproj", "{1368F505-CF7F-456D-BAE9-C188CD1A787D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebUI", "WebUI\WebUI.csproj", "{541A0EE6-90A4-42C9-BBBB-657F7A037F07}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebUI", "WebUI\WebUI.csproj", "{541A0EE6-90A4-42C9-BBBB-657F7A037F07}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

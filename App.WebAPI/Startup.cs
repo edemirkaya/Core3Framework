@@ -115,7 +115,7 @@ namespace App.WebAPI
 
             //RolService
             services.AddScoped<IRoleService, RoleService>();
-
+            services.AddScoped<ICategoryService, CategoryService>();
             ////Mapping
             var m_config = new AutoMapper.MapperConfiguration(cfg =>
             {
@@ -147,7 +147,7 @@ namespace App.WebAPI
             services.AddControllersWithViews()
                 .AddNewtonsoftJson();
             services.AddRazorPages();
-            services.AddRefitClient<ICategoryService>(); ;
+          
 
         }
 

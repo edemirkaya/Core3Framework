@@ -140,6 +140,7 @@ namespace Core3_Framework.Data
 
             modelBuilder.Entity<Categories>(entity =>
             {
+                entity.HasKey(e => e.CategoryId);
                 entity.Property(e => e.CategoryName).HasMaxLength(100);
 
                 entity.HasMany(m => m.Products);

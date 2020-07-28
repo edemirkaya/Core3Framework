@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using CommonCore.Server.Services;
 using Core3_Framework.Contracts.DataContracts;
@@ -20,14 +21,16 @@ namespace App.WebAPI.Controllers
             _categoryService = categoryService;
         }
 
-        public ServiceResult<Categories> GetCategory(int categoryId)
+        [HttpGet]
+        public async Task<IActionResult> GetCategory(int categoryId)
         {
-            return _categoryService.GetCategory(categoryId);
+            return Ok(await _categoryService.GetCategory(categoryId));
         }
 
-        public ServiceResult<List<Categories>> GetAllCategory()
+        [HttpGet]
+        public async Task<IActionResult> GetAllCategory()
         {
-            return _categoryService.GetAllCategory();
+            return Ok(await _categoryService.GetAllCategory());
         }
     }
 }

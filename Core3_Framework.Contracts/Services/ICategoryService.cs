@@ -9,9 +9,9 @@ namespace Core3_Framework.Contracts.Services
     public interface ICategoryService
     {
         [Get("/GetCategory/{categoryId}")]
-        ServiceResult<Categories> GetCategory(int categoryId);
-        
+        Task<ServiceResult<Categories>> GetCategory(int categoryId);
+
         [Get("/GetAllCategory")]
-        ServiceResult<List<Categories>> GetAllCategory();
+        Task<ServiceResult<List<Categories>>> GetAllCategory();
     }
 }
