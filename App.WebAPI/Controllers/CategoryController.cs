@@ -7,10 +7,10 @@ using Core3_Framework.Contracts.DataContracts;
 using Core3_Framework.Contracts.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Refit;
 
 namespace App.WebAPI.Controllers
 {
-    [Route("api/[controller]/[action]")]
     [AllowAnonymous]
     public class CategoryController : Controller
     {
@@ -20,18 +20,11 @@ namespace App.WebAPI.Controllers
             _categoryService = categoryService;
         }
 
-        public IActionResult Index()
-        {
-            return View();
-        }
-
-        [HttpGet]
         public ServiceResult<Categories> GetCategory(int categoryId)
         {
             return _categoryService.GetCategory(categoryId);
         }
 
-        [HttpGet]
         public ServiceResult<List<Categories>> GetAllCategory()
         {
             return _categoryService.GetAllCategory();

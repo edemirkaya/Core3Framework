@@ -11,9 +11,8 @@ namespace Core3_Framework.Contracts.DataContracts
             Products = new HashSet<Products>();
         }
 
-        public int Id { get; set; }
+        public int CategoryId { get; set; }
         public string CategoryName { get; set; }
-        public string SeoURL { get; set; }
 
         public virtual ICollection<Products> Products { get; set; }
     }

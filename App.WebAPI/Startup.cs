@@ -54,8 +54,9 @@ namespace App.WebAPI
             {
                 try
                 {
-                    ctx.UseNpgsql(Configuration.GetConnectionString("ConStr"));
-                    //ctx.UseNpgsql(Configuration.GetConnectionString("IRes"), b => b.MigrationsAssembly("App.WebAPI"));
+                    ctx.UseSqlServer(Configuration.GetConnectionString("ConStr"));
+                    //ctx.UseNpgsql(Configuration.GetConnectionString("ConStr"));
+                    //ctx.UseNpgsql(Configuration.GetConnectionString("ConStr"), b => b.MigrationsAssembly("App.WebAPI"));
                 }
                 catch (Exception)
                 {
@@ -73,23 +74,23 @@ namespace App.WebAPI
             services.AddScoped<ICacheItemService, CacheItemService>();
 
             // setup JWT parameters
-            services.Configure<JwtIssuerSettings>(Configuration.GetSection(nameof(JwtIssuerSettings)));
-            services.AddTransient<IJwtIssuerOptions, JwtIssuerFactory>();
+            //services.Configure<JwtIssuerSettings>(Configuration.GetSection(nameof(JwtIssuerSettings)));
+            //services.AddTransient<IJwtIssuerOptions, JwtIssuerFactory>();
 
             // setup JWT Token validation
-            services.Configure<JwtTokenValidationSettings>(Configuration.GetSection(nameof(JwtTokenValidationSettings)));
-            services.AddSingleton<IJwtTokenValidationSettings, JwtTokenValidationSettingsFactory>();
+            //services.Configure<JwtTokenValidationSettings>(Configuration.GetSection(nameof(JwtTokenValidationSettings)));
+            //services.AddSingleton<IJwtTokenValidationSettings, JwtTokenValidationSettingsFactory>();
 
             // Create TokenValidation factory with DI priciple
             //TODO HATA VEREBILIR
-            var tokenValidationSettings = services.BuildServiceProvider().GetService<IJwtTokenValidationSettings>();
+            //var tokenValidationSettings = services.BuildServiceProvider().GetService<IJwtTokenValidationSettings>();
 
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options =>
-                {
-                    options.TokenValidationParameters = tokenValidationSettings.CreateTokenValidationParameters();
-                    options.SaveToken = true;
-                });
+            //services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            //    .AddJwtBearer(options =>
+            //    {
+            //        options.TokenValidationParameters = tokenValidationSettings.CreateTokenValidationParameters();
+            //        options.SaveToken = true;
+            //    });
 
             //services.AddOptions<JwtBearerOptions>(JwtBearerDefaults.AuthenticationScheme)
             //    .Configure<IJwtTokenValidationSettings>((opts, jwtAuthManager) => {
@@ -101,9 +102,9 @@ namespace App.WebAPI
             //});
 
             // Secure all controllers by default
-            var authorizePolicy = new AuthorizationPolicyBuilder()
-                                                        .RequireAuthenticatedUser()
-                                                        .Build();
+            //var authorizePolicy = new AuthorizationPolicyBuilder()
+            //                                            .RequireAuthenticatedUser()
+            //                                            .Build();
 
             //Exception handling manager
             services.AddScoped<IExceptionHandlingManager, ExceptionHandlingManager>();
@@ -130,7 +131,7 @@ namespace App.WebAPI
             // Add Mvc with options
             services.AddMvc(config =>
                     {
-                        config.Filters.Add(new AuthorizeFilter(authorizePolicy));
+                        //config.Filters.Add(new AuthorizeFilter(authorizePolicy));
                         config.EnableEndpointRouting = false;
                     })
                     // Override default camelCase style (yes its strange the default configuration results in camel case)
@@ -146,8 +147,7 @@ namespace App.WebAPI
             services.AddControllersWithViews()
                 .AddNewtonsoftJson();
             services.AddRazorPages();
-            services.AddRefitClient<ICategoryService>()
-                    .ConfigureHttpClient(c => c.BaseAddress = new Uri(Configuration.GetSection("APIs:CategoryApi:Url").Value));
+            services.AddRefitClient<ICategoryService>(); ;
 
         }
 
@@ -172,16 +172,16 @@ namespace App.WebAPI
 
             app.UseRouting();
 
-            app.UseAuthorization();
+            //app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
-               
+
                 endpoints.MapRazorPages();
-                
+
             });
         }
     }

@@ -8,7 +8,7 @@ namespace Core3_Framework.Contracts.Services
 {
     public interface ICategoryService
     {
-        [Get("/GetCategory/{id}")]
+        [Get("/GetCategory/{categoryId}")]
         ServiceResult<Categories> GetCategory(int categoryId);
         
         [Get("/GetAllCategory")]

@@ -49,11 +49,10 @@ namespace Core3_Framework.Business.Services
 
             Categories category = new Categories();
 
-            category = dbContext.Categories.AsNoTracking().Where(x => x.Id == categoryId).Select(y => new Categories
+            category = dbContext.Categories.AsNoTracking().Where(x => x.CategoryId == categoryId).Select(y => new Categories
             {
-                Id = y.Id,
-                CategoryName = y.CategoryName,
-                SeoURL= y.SeoURL
+                CategoryId = y.CategoryId,
+                CategoryName = y.CategoryName
             }).FirstOrDefault();
 
             if (category == null)

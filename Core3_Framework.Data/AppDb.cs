@@ -7,9 +7,6 @@ using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
 using System.IO;
 
-using System.Text.Json;
-using System.Text.Json.Serialization;
-
 namespace Core3_Framework.Data
 {
     public partial class AppDb : ContextBase
@@ -58,7 +55,8 @@ namespace Core3_Framework.Data
                    .AddJsonFile("appsettings.json").Build();
             var builder = new DbContextOptionsBuilder<AppDb>();
             var connectionString = configuration.GetConnectionString("ConStr");
-            optionsBuilder.UseNpgsql(connectionString);
+            //optionsBuilder.UseNpgsql(connectionString);
+            optionsBuilder.UseSqlServer(connectionString);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -144,8 +142,6 @@ namespace Core3_Framework.Data
             {
                 entity.Property(e => e.CategoryName).HasMaxLength(100);
 
-                entity.Property(e => e.SeoURL).HasMaxLength(50);
-
                 entity.HasMany(m => m.Products);
             });
 
@@ -168,7 +164,7 @@ namespace Core3_Framework.Data
                     .AddJsonFile("appsettings.json").Build();
                 var builder = new DbContextOptionsBuilder<AppDb>();
                 var connectionString = configuration.GetConnectionString("ConStr");
-                builder.UseNpgsql(connectionString);
+                //builder.sq(connectionString);
                 return new AppDb(builder.Options);
             }
         }
