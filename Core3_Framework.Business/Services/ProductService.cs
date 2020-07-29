@@ -9,10 +9,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Core3_Framework.Business.Services
 {
-    public class ProductService : ServiceBase
+    public class ProductService : ServiceBase,IProductService
     {
         public ProductService(AppDb _dbContext, ILogHelper _iLogHelper)
                : base(_dbContext)
@@ -20,7 +21,7 @@ namespace Core3_Framework.Business.Services
 
         }
 
-        public ServiceResult<Products> GetProductbyId(int productId)
+        public async Task<ServiceResult<Products>> GetProductbyId(int productId)
         {
             int hata = 0;
             string hataMesaji = string.Empty;
@@ -49,9 +50,25 @@ namespace Core3_Framework.Business.Services
             return new ServiceResult<Products> { Message = hataMesaji, ServiceResultType = sonucTipi, Result = product };
         }
 
-        public IEnumerable<Products> GetProductsByCategoryId(int categoryId)
+        public async Task<ServiceResult<List<Products>>> GetProductsByCategoryId(int categoryId)
         {
-            throw new NotImplementedException();
+            int hata = 0;
+            string hataMesaji = string.Empty;
+            EnumServiceResultType sonucTipi = EnumServiceResultType.Unspecified;
+
+            List<Products> products = new List<Products>();
+
+            products = dbContext.Products.AsNoTracking().Include(x => x.Categories).Where(x => x.CategoryId == categoryId).ToList();
+
+            if (products == null)
+            {
+                hataMesaji = "Ürün bulunamadı.";
+                sonucTipi = EnumServiceResultType.Error;
+                hata++;
+            }
+
+            sonucTipi = EnumServiceResultType.Success;
+            return new ServiceResult<List<Products>> { Message = hataMesaji, ServiceResultType = sonucTipi, Result = products };
         }
     }
 }
