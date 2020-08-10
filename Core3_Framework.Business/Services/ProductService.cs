@@ -13,12 +13,33 @@ using System.Threading.Tasks;
 
 namespace Core3_Framework.Business.Services
 {
-    public class ProductService : ServiceBase,IProductService
+    public class ProductService : ServiceBase, IProductService
     {
         public ProductService(AppDb _dbContext, ILogHelper _iLogHelper)
                : base(_dbContext)
         {
 
+        }
+
+        public async Task<ServiceResult<List<Products>>> GetAllProducts()
+        {
+            int hata = 0;
+            string hataMesaji = string.Empty;
+            EnumServiceResultType sonucTipi = EnumServiceResultType.Unspecified;
+
+            List<Products> products = new List<Products>();
+
+            products = dbContext.Products.Include(i => i.Category).AsNoTracking().ToList();
+
+            if (products == null)
+            {
+                hataMesaji = "Ürün bulunamadı.";
+                sonucTipi = EnumServiceResultType.Error;
+                hata++;
+            }
+
+            sonucTipi = EnumServiceResultType.Success;
+            return new ServiceResult<List<Products>> { Message = hataMesaji, ServiceResultType = sonucTipi, Result = products };
         }
 
         public async Task<ServiceResult<Products>> GetProductbyId(int productId)
@@ -29,9 +50,9 @@ namespace Core3_Framework.Business.Services
 
             Products product = new Products();
 
-            product = dbContext.Products.AsNoTracking().Include(x => x.Categories).Where(x => x.Id == productId).Select(y => new Products
+            product = dbContext.Products.AsNoTracking().Include(x => x.Category).Where(x => x.ProductId == productId).Select(y => new Products
             {
-                Id = y.Id,
+                ProductId = y.ProductId,
                 ProductName = y.ProductName,
                 QuantityPerUnit = y.QuantityPerUnit,
                 UnitPrice = y.UnitPrice,
@@ -58,7 +79,7 @@ namespace Core3_Framework.Business.Services
 
             List<Products> products = new List<Products>();
 
-            products = dbContext.Products.AsNoTracking().Include(x => x.Categories).Where(x => x.CategoryId == categoryId).ToList();
+            products = dbContext.Products.AsNoTracking().Include(x => x.Category).Where(x => x.CategoryId == categoryId).ToList();
 
             if (products == null)
             {

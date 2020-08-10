@@ -16,6 +16,12 @@ namespace App.WebAPI.Controllers
         }
 
         [HttpGet]
+        public async Task<IActionResult> GetAllProducts()
+        {
+            return Ok(await _productService.GetAllProducts());
+        }
+
+        [HttpGet]
         public async Task<IActionResult> GetProductbyId(int productId)
         {
             return Ok(await _productService.GetProductbyId(productId));

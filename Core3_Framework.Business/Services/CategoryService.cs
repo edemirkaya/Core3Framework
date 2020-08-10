@@ -41,6 +41,27 @@ namespace Core3_Framework.Business.Services
             return new ServiceResult<List<Categories>> { Message = hataMesaji, ServiceResultType = sonucTipi, Result = category };
         }
 
+        public async Task<ServiceResult<List<Categories>>> GetCategoryBySeo(string seoURL)
+        {
+            int hata = 0;
+            string hataMesaji = string.Empty;
+            EnumServiceResultType sonucTipi = EnumServiceResultType.Unspecified;
+
+            List<Categories> category = new List<Categories>();
+
+            category = dbContext.Categories.Include(i=> i.Products).Where(q=> q.SeoURL ==seoURL).AsNoTracking().ToList();
+
+            if (category == null)
+            {
+                hataMesaji = "Ürün bulunamadı.";
+                sonucTipi = EnumServiceResultType.Error;
+                hata++;
+            }
+
+            sonucTipi = EnumServiceResultType.Success;
+            return new ServiceResult<List<Categories>> { Message = hataMesaji, ServiceResultType = sonucTipi, Result = category };
+        }
+
         public async Task<ServiceResult<Categories>> GetCategory(int categoryId)
         {
             int hata = 0;

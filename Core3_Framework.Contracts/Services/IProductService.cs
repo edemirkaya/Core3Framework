@@ -11,5 +11,6 @@ namespace Core3_Framework.Contracts.Services
     {
         Task<ServiceResult<Products>> GetProductbyId(int productId);
         Task<ServiceResult<List<Products>>> GetProductsByCategoryId(int categoryId);
+        Task<ServiceResult<List<Products>>> GetAllProducts();
     }
 }

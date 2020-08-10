@@ -27,7 +27,6 @@ using Newtonsoft.Json.Serialization;
 using Newtonsoft.Json;
 using Microsoft.IdentityModel.Tokens;
 using App.WebAPI.Models;
-using Refit;
 
 namespace App.WebAPI
 {
@@ -116,6 +115,7 @@ namespace App.WebAPI
             //RolService
             services.AddScoped<IRoleService, RoleService>();
             services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<IProductService, ProductService>();
             ////Mapping
             var m_config = new AutoMapper.MapperConfiguration(cfg =>
             {
@@ -139,6 +139,7 @@ namespace App.WebAPI
                     {
                         options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
                         options.SerializerSettings.Formatting = Formatting.Indented;
+                        options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
                     });
 
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();

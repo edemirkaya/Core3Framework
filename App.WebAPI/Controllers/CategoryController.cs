@@ -8,7 +8,6 @@ using Core3_Framework.Contracts.DataContracts;
 using Core3_Framework.Contracts.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Refit;
 
 namespace App.WebAPI.Controllers
 {
@@ -31,6 +30,12 @@ namespace App.WebAPI.Controllers
         public async Task<IActionResult> GetAllCategory()
         {
             return Ok(await _categoryService.GetAllCategory());
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetCategoryBySeo(string seoUrl)
+        {
+            return Ok(await _categoryService.GetCategoryBySeo(seoUrl));
         }
     }
 }
